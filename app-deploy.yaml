@@ -1,0 +1,46 @@
+apiVersion: appsody.dev/v1beta1
+kind: AppsodyApplication
+metadata:
+  annotations:
+    image.opencontainers.org/created: "2020-01-14T16:04:07-05:00"
+    stack.appsody.dev/authors: Mike Andrasak <andrasak@us.ibm.com>, Andy Mauer <ajmauer@us.ibm.com>,
+      Scott Kurz <skurz@us.ibm.com>, Adam Wisniewski <awisniew@us.ibm.com>
+    stack.appsody.dev/configured: dev.local/appsody/java-openliberty:0.1
+    stack.appsody.dev/created: "2020-01-14T14:48:41-05:00"
+    stack.appsody.dev/description: Open Liberty & OpenJ9 using Maven
+    stack.appsody.dev/licenses: Apache-2.0
+    stack.appsody.dev/tag: dev.local/appsody/java-openliberty:0.1.2
+    stack.appsody.dev/title: Open Liberty
+  creationTimestamp: null
+  labels:
+    image.opencontainers.org/title: testapp
+    stack.appsody.dev/id: java-openliberty
+    stack.appsody.dev/version: 0.1.2
+  name: testapp
+spec:
+  applicationImage: dev.local/testapp
+  createKnativeService: false
+  expose: true
+  livenessProbe:
+    failureThreshold: 12
+    httpGet:
+      path: /health/live
+      port: 9080
+    initialDelaySeconds: 5
+    periodSeconds: 2
+  readinessProbe:
+    failureThreshold: 12
+    httpGet:
+      path: /health/ready
+      port: 9080
+    initialDelaySeconds: 5
+    periodSeconds: 2
+    timeoutSeconds: 1
+  service:
+    annotations:
+      prometheus.io/scrape: "true"
+    port: 9080
+    type: NodePort
+  stack: java-openliberty
+  version: 1.0.0
+status: {}
